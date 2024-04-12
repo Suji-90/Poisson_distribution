@@ -1,4 +1,7 @@
 # Fitting Poisson  distribution
+##DEVELOPED BY: B.NIHITHA RANI
+##REFERENCE NUMBER: 23012494
+
 # Aim : 
 
 To fit poisson distribution for the arrival of objects per minute from the feeder
@@ -29,12 +32,46 @@ The Poisson distribution is the discrete probability distribution of the number 
 ![image](https://user-images.githubusercontent.com/103921593/230282876-f4a5afbf-cac1-4648-a1b0-c78840638a8e.png)
 
 # Program :
-
+```
+import numpy as np
+import math
+import matplotlib.pyplot as plt
+x=[ int(i) for i in input().split()]
+y=[ int(i) for i in input().split()]
+N=len(x)
+Sx=0
+Sy=0
+Sxy=0
+Sx2=0
+Sy2=0
+for i in range(0,N):
+    Sx=Sx+x[i]
+    Sy=Sy+y[i]
+    Sxy=Sxy+x[i]*y[i]
+    Sx2=Sx2+x[i]**2
+    Sy2=Sy2+y[i]**2
+r=(N*Sxy-Sx*Sy)/(math.sqrt(N*Sx2-Sx**2)*math.sqrt(N*Sy2-Sy**2))
+print("The Correlation coefficient is %0.3f"%r)
+byx=(N*Sxy-Sx*Sy)/(N*Sx2-Sx**2)
+xmean=Sx/N
+ymean=Sy/N
+print("The Regression line Y on X is ::: y = %0.3f + %0.3f (x-%0.3f)"%(ymean,byx,xmean))
+plt.scatter(x,y)
+def Reg(x):
+  return ymean + byx*(x-xmean)
+x=np.linspace(20,80,51)
+y1=Reg(x)
+plt.plot(x,y1,'r')
+plt.xlabel('x-data')
+plt.ylabel('y-data')
+plt.legend(['Regression Line','Data points'])
+```
  
 
 # Output : 
 
 
+![240576393-b7d1840e-940b-4520-ab4a-667348f111a6](https://github.com/NIHITHARANI/Poisson_distribution/assets/149365740/b1363ebe-cab4-4437-a456-928098c0c8e0)
 
 # Results
 
