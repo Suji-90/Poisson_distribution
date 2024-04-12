@@ -35,43 +35,47 @@ The Poisson distribution is the discrete probability distribution of the number 
 ```
 import numpy as np
 import math
-import matplotlib.pyplot as plt
-x=[ int(i) for i in input().split()]
-y=[ int(i) for i in input().split()]
-N=len(x)
-Sx=0
-Sy=0
-Sxy=0
-Sx2=0
-Sy2=0
-for i in range(0,N):
-    Sx=Sx+x[i]
-    Sy=Sy+y[i]
-    Sxy=Sxy+x[i]*y[i]
-    Sx2=Sx2+x[i]**2
-    Sy2=Sy2+y[i]**2
-r=(N*Sxy-Sx*Sy)/(math.sqrt(N*Sx2-Sx**2)*math.sqrt(N*Sy2-Sy**2))
-print("The Correlation coefficient is %0.3f"%r)
-byx=(N*Sxy-Sx*Sy)/(N*Sx2-Sx**2)
-xmean=Sx/N
-ymean=Sy/N
-print("The Regression line Y on X is ::: y = %0.3f + %0.3f (x-%0.3f)"%(ymean,byx,xmean))
-plt.scatter(x,y)
-def Reg(x):
-  return ymean + byx*(x-xmean)
-x=np.linspace(20,80,51)
-y1=Reg(x)
-plt.plot(x,y1,'r')
-plt.xlabel('x-data')
-plt.ylabel('y-data')
-plt.legend(['Regression Line','Data points'])
+import scipy.stats
+L=[int(i) for i in input().split()]
+N=len(L); M=max(L) 
+X=list();f=list()
+for i in range (M+1):
+    c = 0
+    for j in range(N):
+        if L[j]==i:
+            c=c+1
+    f.append(c)
+    X.append(i)
+sf=np.sum(f)
+p=list()
+for i in range(M+1):
+    p.append(f[i]/sf) 
+mean=np.inner(X,p)
+p=list();E=list();xi=list()
+print("X P(X=x) Obs.Fr Exp.Fr xi")
+print("--------------------------")
+for x in range(M+1):
+    p.append(math.exp(-mean)*mean**x/math.factorial(x))
+    E.append(p[x]*sf)
+    xi.append((f[x]-E[x])**2/E[x])
+    print("%2.2f %2.3f %4.2f %3.2f %3.2f"%(x,p[x],f[x],E[x],xi[x]))
+print("--------------------------")
+cal_chi2_sq=np.sum(xi)
+print("Calculated value of Chi square is %4.2f"%cal_chi2_sq)
+table_chi2=scipy.stats.chi2.ppf(1-.01,df=M)
+print("Table value of chi square at 1 level is %4.2f"%table_chi2)
+if cal_chi2_sq<table_chi2:
+    print("The given data can be fitted in poisson Distribution at 1% LOS")
+else:
+    print("The given data cannot be fitted in Poisson Distribution at 1% LOS")
+
 ```
  
 
 # Output : 
+![240573602-66c445f7-50f1-4749-a102-9da761ccabcd](https://github.com/NIHITHARANI/Poisson_distribution/assets/149365740/5a2e5080-6b9b-40cd-9fc4-57052cef379a)
 
 
-![240576393-b7d1840e-940b-4520-ab4a-667348f111a6](https://github.com/NIHITHARANI/Poisson_distribution/assets/149365740/b1363ebe-cab4-4437-a456-928098c0c8e0)
 
 # Results
 
