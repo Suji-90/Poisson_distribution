@@ -1,5 +1,5 @@
 # Fitting Poisson  distribution
-# #DEVELOPED BY: SUJITHRA K
+## DEVELOPED BY: SUJITHRA K
 ## REFERENCE NUMBER: 212223040212
 
 # Aim : 
